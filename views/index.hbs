@@ -1,0 +1,24 @@
+<h3>
+Hits
+</h3>
+<table>
+  <thead>
+    <th>id</th>
+    <th>user-agent</th>
+    <th>referrer</th>
+    <th>url</th>
+    <th>created at</th>
+  </thead>
+  {{#each hits}}
+  <tr>
+    <td>{{id}}</td>
+    <td>{{userAgent}}</td>
+    <td>{{referrer}}</td>
+    <td>{{url}}</td>
+    <td>{{createdAt}}</td>
+  </tr>
+  {{/each}}
+</table>
+<button onclick="if(confirm('Are you sure you want to clear all hits?')){window.location.href='/clear';}">
+  Clear All Hits
+</button>
