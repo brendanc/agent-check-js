@@ -5,38 +5,38 @@
  * Messages: id + message text
  */
 
+const path = require("path");
 const fs = require("fs");
-const dbFile = "./.data/hits2.db";
-const exists = fs.existsSync(dbFile);
+const dbFile = path.resolve(process.env.DATA_FILE, "hits2.db") ||"./.data/hits2.db";
 const sqlite3 = require("sqlite3").verbose();
 const dbWrapper = require("sqlite");
+const { create } = require("domain");
 let db;
 
-//SQLite wrapper for async / await connections https://www.npmjs.com/package/sqlite
-dbWrapper
-  .open({
-    filename: dbFile,
-    driver: sqlite3.Database,
-  })
-  .then(async (dBase) => {
-    db = dBase;
-
-    try {
-      if (!exists) {
-        await db.run(
-          "CREATE TABLE Hits (id INTEGER PRIMARY KEY AUTOINCREMENT, userAgent TEXT,referrer TEXT,url TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)"
-        );
-      }
-      console.log(
-        await db.all("SELECT * from Hits order by createdAt desc limit 10")
-      );
-    } catch (dbError) {
-      console.error(dbError);
-    }
-  });
 
 // Server script calls these methods to connect to the db
 module.exports = {
+
+  // setup the database
+  initialize: async() => {
+    console.log("Initializing database");
+    //SQLite wrapper for async / await connections https://www.npmjs.com/package/sqlite
+    dbWrapper
+      .open({
+        filename: dbFile,
+        driver: sqlite3.Database,
+      })
+      .then(async (dBase) => {
+        db = dBase;
+        create_sql =  "CREATE TABLE IF NOT EXISTS Hits (id INTEGER PRIMARY KEY AUTOINCREMENT, userAgent TEXT,referrer TEXT,url TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)"       
+        try {
+            await db.run(create_sql);
+        } catch (dbError) {
+          console.error(dbError);
+        }
+      });
+    },
+
   // Get the hits in the database
   getHits: async () => {
     try {

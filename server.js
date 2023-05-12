@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require("express");
 const exphbs = require("express-handlebars");
 const request = require("request");
@@ -37,4 +39,5 @@ app.get("/clear", async function (req, res) {
 // listen for requests :)
 const listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
+  db.initialize();
 });
