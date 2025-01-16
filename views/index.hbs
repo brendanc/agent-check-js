@@ -1,11 +1,14 @@
 <h3>
-Hits
+  <span>Received Hits</span>
+  <input type="search" placeholder="Search..." class="form-control search-input" data-table="hits-table"/>
 </h3>
-<table>
+
+<table id="hits-table" class="hits-table">
   <thead>
     <th>id</th>
     <th>user-agent</th>
     <th>referrer</th>
+    <th>ip</th>
     <th>url</th>
     <th>created at</th>
   </thead>
@@ -14,6 +17,7 @@ Hits
     <td>{{id}}</td>
     <td>{{userAgent}}</td>
     <td>{{referrer}}</td>
+    <td>{{ipAddress}}</td>
     <td>{{url}}</td>
     <td>{{createdAt}}</td>
   </tr>

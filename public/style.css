@@ -78,3 +78,11 @@ table td {
   padding: .5em;
   border: 1px solid grey;
 }
+h3 span {
+	font-size: 22px;
+}
+h3 input.search-input {
+	width: 300px;
+	margin-left: auto;
+	float: right
+}
